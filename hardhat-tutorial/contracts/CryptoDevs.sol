@@ -47,7 +47,7 @@
             whitelist = IWhitelist(whitelistContract);
         }
 
-        function startePresale() public onlyOwner {
+        function startPresale() public onlyOwner {
             presaleStarted = false;
 
             //Set preSaleEnded time as current timestamp + 5 

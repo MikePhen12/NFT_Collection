@@ -26,7 +26,7 @@ export default function Home() {
     const presaleMint = async() => {
         try {
             // Create a signer since this is a write transaction 
-            const signer = await getProviderOfSigner(true); 
+            const signer = await getProviderOrSigner(true); 
 
             // creating a new instance of the contract with a signer that allows to update methods
             const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, signer);
@@ -50,10 +50,10 @@ export default function Home() {
 
     //Minting an NFT after the presale 
 
-    const publicMint = async() => {
+    const publicMint = async () => {
         try {
             // Create a signer since this is a write transaction 
-            const signer = await getProviderOfSigner(true); 
+            const signer = await getProviderOrSigner(true); 
 
             // creating a new instance of the contract with a signer that allows to update methods
             const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, signer);
@@ -75,11 +75,11 @@ export default function Home() {
         }
     };
 
-    const connectWallet = async() => {
+    const connectWallet = async () => {
         try {
             // Get the provider from web3modal, which is metamask 
             // When used for the first time, it prompts the user to connect their wallet 
-            await getProviderOfSigner();
+            await getProviderOrSigner();
             setWalletConnected(true);
 
         } catch (err) {
@@ -92,7 +92,7 @@ export default function Home() {
     const startPresale = async() => {
         try {
             // Need a signed here since this is a write transaction 
-            const signer = await getProviderOfSigner(true);
+            const signer = await getProviderOrSigner(true);
 
             //Create a new instance of the contract with a signer which updates the methods 
             const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, signer); 
@@ -116,7 +116,7 @@ export default function Home() {
     const checkIfPresaleStarted = async() => {
         try {
             // Get the provider from web3Modal, but we not need the signer as we are only reading from the block chain 
-            const provider = await getProviderOfSigner();
+            const provider = await getProviderOrSigner();
 
             // Connect to the contract using the provider, so we will have read only access 
             const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
@@ -140,7 +140,7 @@ export default function Home() {
     const checkIfPresaleEnded = async () => {
         try {
             // Get the provider from the web3modal which is metamask as we are only reading from the block chain 
-            const provider = await getProviderOfSigner();
+            const provider = await getProviderOrSigner();
 
             // Connect as the provider so we will only have read only access to the contract
             const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
@@ -168,7 +168,7 @@ export default function Home() {
     const getOwner = async() => {
         try {
               // Get the provider from the web3modal which is metamask as we are only reading from the block chain 
-              const provider = await getProviderOfSigner();
+              const provider = await getProviderOrSigner();
 
               // Connect as the provider so we will only have read only access to the contract
               const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
@@ -177,7 +177,7 @@ export default function Home() {
               const _owner = await nftContract.owner();
 
               //We will get the signer now to extract the address of the currently connected metamask account 
-              const signer = await getProviderOfSigner(true);
+              const signer = await getProviderOrSigner(true);
 
               // Get the address associated to the signer which is connected to metamask 
               const address = await signer.getAddress();
@@ -194,7 +194,7 @@ export default function Home() {
     const getTokenIdsMinted = async () => { 
         try {
             // Get the proivder from web3modal, as we are only reading the state from the blockchain so no signer is necessary here
-            const provider = await getProviderOfSigner();
+            const provider = await getProviderOrSigner();
 
             // Connect to Contract using a provider, so will have read only access to the contract 
             const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
@@ -223,7 +223,7 @@ export default function Home() {
    *
    * @param {*} needSigner - True if you need the signer, default false otherwise
    **/
-    const getProviderOfSigner = async (needSigner = false) => {
+    const getProviderOrSigner = async (needSigner = false) => {
         // Connect to metamask
         // Since we store the web3modal as a refernce, need to access the current value to get access to the underlying object 
         const proivder = await web3ModalRef.current.connect();
