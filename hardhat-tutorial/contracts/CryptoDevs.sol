@@ -20,7 +20,7 @@
         uint256 public maxTokenIds = 20;
 
         //total number of NFTs minted
-        uint public tokenIds;
+        uint256 public tokenIds;
 
         //whitelist contract instance
         IWhitelist whitelist; 
@@ -48,7 +48,7 @@
         }
 
         function startPresale() public onlyOwner {
-            presaleStarted = false;
+            presaleStarted = true;
 
             //Set preSaleEnded time as current timestamp + 5 
             // Soldity has various time stamps that go from seconds to years 

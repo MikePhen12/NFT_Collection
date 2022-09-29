@@ -101,7 +101,7 @@ export default function Home() {
             const tx = await nftContract.startPresale();
             setLoading(true);
 
-            // WAit or the transaction to get mined
+            // WAit for the transaction to get mined
             await tx.wait()
             setLoading(false);
 
@@ -167,23 +167,23 @@ export default function Home() {
 
     const getOwner = async() => {
         try {
-              // Get the provider from the web3modal which is metamask as we are only reading from the block chain 
-              const provider = await getProviderOrSigner();
+            // Get the provider from the web3modal which is metamask as we are only reading from the block chain 
+            const provider = await getProviderOrSigner();
 
-              // Connect as the provider so we will only have read only access to the contract
-              const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
+            // Connect as the provider so we will only have read only access to the contract
+            const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
 
-              // Call the owner function from the contract 
-              const _owner = await nftContract.owner();
+            // Call the owner function from the contract 
+            const _owner = await nftContract.owner();
 
-              //We will get the signer now to extract the address of the currently connected metamask account 
-              const signer = await getProviderOrSigner(true);
+            //We will get the signer now to extract the address of the currently connected metamask account 
+            const signer = await getProviderOrSigner(true);
 
-              // Get the address associated to the signer which is connected to metamask 
-              const address = await signer.getAddress();
-              if(address.toLowerCase() === _owner.toLowerCase()) {
+            // Get the address associated to the signer which is connected to metamask 
+            const address = await signer.getAddress();
+            if (address.toLowerCase() === _owner.toLowerCase()) {
                 setIsOwner(true);
-              }
+            }
         } catch (err) {
             console.error(err.message); 
         }
